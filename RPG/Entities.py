@@ -26,7 +26,7 @@ MRE =            Item('MRE', 'Inc Food', 'Inc HP', 50, 25, False, True)
 MedKit =         Item('MedKit', 'Inc HP', 'Heal Bleeding', 100, True, False, True)
 
 class Map:
-    def __init__(self): 
+    def __init__(self, token='P'): 
         
         self.map1 = [
             [".",".",".",".",".",".","."],
@@ -39,6 +39,7 @@ class Map:
         
         self.rows = len(self.map1)
         self.cols = len(self.map1[0])
+        self.startchar = "."
 
     def display(self):
         print('+' + ''.join('-' * 1 for _ in range(self.cols * 4 + 3)) + '+')
@@ -47,7 +48,7 @@ class Map:
         for row in range(self.rows):
             print('|   ', end='')
             for col in range(self.cols):
-                print(self.map1[row][col],end="   |   ") if col is self.cols - 1 else print(self.map1[row][col],end="   ")
+                print(self.map1[row][col],end="   |   ") if col is self.cols-1 else print(self.map1[row][col],end="   ")
             print()
             if row is not (self.rows - 1):
                 print('|' + ''.join(' ' * 1 for _ in range(self.cols * 3 + 10)) + '|')
@@ -57,3 +58,11 @@ class Map:
 
     def getrows(self): return self.rows
     def getcols(self): return self.cols
+    
+    def setToken(self, Player, xindex, yindex, token):
+        self.map1[Player.xpos][Player.ypos] = self.startchar
+        self.startchar = self.map1[xindex][yindex]
+        self.map1[xindex][yindex] = Player.token
+        
+        Player.xpos = xindex
+        Player.ypos = yindex
