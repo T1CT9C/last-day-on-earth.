@@ -59,10 +59,10 @@ class Map:
     def getrows(self): return self.rows
     def getcols(self): return self.cols
     
-    def setToken(self, Player, xindex, yindex, token):
-        self.map1[Player.xpos][Player.ypos] = self.startchar
-        self.startchar = self.map1[xindex][yindex]
-        self.map1[xindex][yindex] = Player.token
-        
-        Player.xpos = xindex
-        Player.ypos = yindex
+    def setToken(self, player, xindex, yindex):
+        self.clearToken(player)
+        self.map1[xindex][yindex] = player.token
+
+    
+    def clearToken(self, player):
+        self.map1[player.xpos][player.ypos] = "."
