@@ -17,17 +17,17 @@ while True:
 
     # Move directly by modifying player.xpos and player.ypos
     if move == 'W' and x > 0:
-        #player.xpos = x
         x -= 1
-    elif move == 'S' and x < player.map.rows - 1:
         player.xpos = x
+    elif move == 'S' and x < player.map.rows - 1:
         x += 1
+        player.xpos = x
     elif move == 'A' and y > 0:
-        player.ypos = y
         y -= 1
-    elif move == 'D' and y < player.map.cols - 1:
         player.ypos = y
+    elif move == 'D' and y < player.map.cols - 1:
         y += 1
+        player.ypos = y
     elif move == 'Q':
         break  # Exit the game
     else:
@@ -38,3 +38,5 @@ while True:
     clear()
     player.map.setToken(player, x, y)
     player.map.display()
+    print(player.xpos, player.ypos)
+    input()

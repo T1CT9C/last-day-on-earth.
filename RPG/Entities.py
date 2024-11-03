@@ -62,7 +62,26 @@ class Map:
     def setToken(self, player, xindex, yindex):
         self.clearToken(player)
         self.map1[xindex][yindex] = player.token
-
     
     def clearToken(self, player):
         self.map1[player.xpos][player.ypos] = "."
+
+class PointSystem:
+    def __init__(self, max, current, min = 0):
+        self.max = max
+        self.current = current if current < self.max else self.max
+        self.min = min if min else 0
+        
+    # Getters
+    def getmax(self): return self.max
+    def getmin(self): return self.min
+    def getcurrent(self): return self.current
+
+    # Setters
+    def setMax(self, newmax): self.max = newmax
+    def setMin(self, newmin): self.min = newmin if newmin > 0 else 0
+    
+    def setCurrent(self, newCurrent): self.current = newCurrent if newCurrent < self.max and newCurrent > self.min
+    def decCurrent(self, dec): self.current = self.min if dec > self.current else self.current - dec
+    def incCurrent(self, inc): 
+        self.current = self.max if inc > self.max or inc + self.current > self.max else self.current + inc
