@@ -1,12 +1,18 @@
 from RPG.Entities import Map, PointSystem
+import random
 
 class Character:
-    def __init__(self, subclass, name, Weapon,  ):
+    def __init__(self, subclass, name, Weapon ):
         # implement this later
-        self.Atk = 0
-        self.Def = 0
-        self.Spd = 0
-        self.Luk = 0
+        self.Hp = PointSystem(1000, 50, min = 0)
+        self.subclass = subclass['name']
+        self.name = name
+        self.Weapon = Weapon
+        
+        self.Atk = random.randint(0,10) + subclass['atk']
+        self.Def = random.randint(0,10) + subclass['def']
+        self.Spd = random.randint(0,10) + subclass['spd']
+        self.Luk = random.randint(0,20)
 
         self.lvl = PointSystem(100, 1, min = 0)
         self.exp = PointSystem(10, 0)

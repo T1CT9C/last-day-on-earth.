@@ -81,7 +81,8 @@ class PointSystem:
     def setMax(self, newmax): self.max = newmax
     def setMin(self, newmin): self.min = newmin if newmin > 0 else 0
     
-    def setCurrent(self, newCurrent): self.current = newCurrent if newCurrent < self.max and newCurrent > self.min
+    def setCurrent(self, newCurrent): 
+        self.current= newCurrent if newCurrent < self.max and newCurrent > self.min else self.current
     def decCurrent(self, dec): self.current = self.min if dec > self.current else self.current - dec
     def incCurrent(self, inc): 
         self.current = self.max if inc > self.max or inc + self.current > self.max else self.current + inc
