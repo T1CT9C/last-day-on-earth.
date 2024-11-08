@@ -4,12 +4,8 @@ from config.Config import clear
 class Game:
     def __init__(self):
         ...
-   
-    def run(self):
-        s = {'name': 'cleric', 'atk':5, 'def':6, 'spd':6}
-        player = Character(s, 'oof', 'baseball bat')
-        x,y = 0,0
-        #while True:
+        
+    def move(self, player, x, y):
         while True:
             clear()
             player.map.setToken(player, x, y)
@@ -44,3 +40,9 @@ class Game:
             player.map.display()
             print(player.xpos, player.ypos)
             input()
+        
+    def run(self):
+        s = {'name': 'cleric', 'atk':5, 'def':6, 'spd':6}
+        player = Character(s, 'oof', 'baseball bat')
+        x,y = 0,0   # add some way to input player current loc
+        self.move(player, x, y)

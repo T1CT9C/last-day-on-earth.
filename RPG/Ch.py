@@ -25,3 +25,31 @@ class Character:
         
         self.token = 'P'
         self.map = Map()
+    
+    def battle(self, target, atktype, gib):  #melee attack, spell maybe pokemon
+        match atktype: 
+            case 1:         #Normal melee attack (weapon also)
+                damage = (self.Atk + self.Weapon.atk) * 10
+                finaldmg = damage // target.Def
+                target.hp -= finaldmg
+                return finaldmg if gib is True else None
+            case 2:
+                ...
+                # add spell or pokemon type smth here
+                # maybe item use
+
+class Enemy:
+    def __init__(self, player, type, typedict, names):
+        self.name = random.choice(names)
+
+        self.Hp = random.randint(0, player.lvl // 2) + player.lvl.getcurrent()
+        self.atk = random.randint(0,type[type]['atk']) + player.lvl.getcurrent()
+        self.Def = random.randint(0,type[type]['def']) + player.lvl.getcurrent()
+        
+        self.xpdrop = random.randint(player.lvl.getcurrent() // 2, player.lvl.getcurrent()) * player.lvl.getcurrent()
+    
+    def AttackPlayer(self, player, gib):
+        damage = (self.atk + random.randint(0, player.lvl.getcurrent())) * 10
+        finaldmg = damage // player.Def
+        player.hp.deCurrent(finaldmg)
+        return finaldmg if gib is True else None

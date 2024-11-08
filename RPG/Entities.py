@@ -1,5 +1,4 @@
-class Item:
-    
+class Item:   
     def __init__(self, name, type, subtype, incMain, incSub, ispermanent, isconsumable):
         self.name = name
         self.type = type
@@ -8,8 +7,7 @@ class Item:
         self.incSub = incSub
     
         self.ispermanent = ispermanent
-        self.isconsumable = False
-        
+        self.isconsumable = isinstance
     
     def get_name(self): return self.name
     def get_type(self): return self.type
@@ -18,12 +16,6 @@ class Item:
     def get_incSub(self): return self.incSub
     def is_permanent(self): return self.ispermanent
     def is_consumable(self): return self.isconsumable
-
-# Items
-RadApple =       Item('Irradiated apple', 'Inc Food', 'Inc Rad', 5, 15, False, True)
-RustyCannister = Item('Rusty Canister', 'Inc Food', 'Inc Rad', 25, 5, False, True)
-MRE =            Item('MRE', 'Inc Food', 'Inc HP', 50, 25, False, True)
-MedKit =         Item('MedKit', 'Inc HP', 'Heal Bleeding', 100, True, False, True)
 
 class Map:
     def __init__(self, token='P'): 
@@ -86,3 +78,9 @@ class PointSystem:
     def decCurrent(self, dec): self.current = self.min if dec > self.current else self.current - dec
     def incCurrent(self, inc): 
         self.current = self.max if inc > self.max or inc + self.current > self.max else self.current + inc
+
+# Items
+RadApple =       Item('Irradiated apple', 'Inc Food', 'Inc Rad', 5, 15, False, True)
+RustyCannister = Item('Rusty Canister', 'Inc Food', 'Inc Rad', 25, 5, False, True)
+MRE =            Item('MRE', 'Inc Food', 'Inc HP', 50, 25, False, True)
+MedKit =         Item('MedKit', 'Inc HP', 'Heal Bleeding', 100, True, False, True)

@@ -1,5 +1,5 @@
 run = "python main.py"
-modules = ["python-3.8"]
+modules = ["python-3.8", "python-3.10"]
 [nix]
 channel = "stable-24_05"
 
