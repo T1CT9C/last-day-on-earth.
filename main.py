@@ -5,7 +5,5 @@ from RPG.game import Game
 
 import time
 
-#ldoe = Game()
-#ldoe.run()
-def o(): return None
-o()
+ldoe = Game()
+ldoe.run()

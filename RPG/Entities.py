@@ -21,7 +21,16 @@ class Map:
     def __init__(self, token='P'): 
         
         self.map1 = [
+            [".",".",".",".",".","E","."],
             [".",".",".",".",".",".","."],
+            [".",".",".",".",".",".","."],
+            [".",".",".",".",".",".","."],
+            [".",".",".",".",".",".","."],
+            [".",".",".",".",".",".","."],
+            [".",".",".",".",".",".","."], ]
+
+        self.copy1 = [
+            [".",".",".",".",".","E","."],
             [".",".",".",".",".",".","."],
             [".",".",".",".",".",".","."],
             [".",".",".",".",".",".","."],
@@ -56,7 +65,7 @@ class Map:
         self.map1[xindex][yindex] = player.token
     
     def clearToken(self, player):
-        self.map1[player.xpos][player.ypos] = "."
+        self.map1[player.ypos][player.xpos] = self.copy1[player.ypos][player.xpos]
 
 class PointSystem:
     def __init__(self, max, current, min = 0):
@@ -74,7 +83,7 @@ class PointSystem:
     def setMin(self, newmin): self.min = newmin if newmin > 0 else 0
     
     def setCurrent(self, newCurrent): 
-        self.current= newCurrent if newCurrent < self.max and newCurrent > self.min else self.current
+        self.current= newCurrent if newCurrent <= self.max and newCurrent > self.min else self.current
     def decCurrent(self, dec): self.current = self.min if dec > self.current else self.current - dec
     def incCurrent(self, inc): 
         self.current = self.max if inc > self.max or inc + self.current > self.max else self.current + inc

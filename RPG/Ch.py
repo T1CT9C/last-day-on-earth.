@@ -4,17 +4,18 @@ import random
 class Character:
     def __init__(self, subclass, name, Weapon ):
         # implement this later
-        self.Hp = PointSystem(1000, 50, min = 0)
+        self.Hp = PointSystem(50, 50, min = 0)
         self.subclass = subclass['name']
         self.name = name
         self.Weapon = Weapon
+        self.WeaponName = Weapon['name']
         
         self.Atk = random.randint(0,10) + subclass['atk']
         self.Def = random.randint(0,10) + subclass['def']
         self.Spd = random.randint(0,10) + subclass['spd']
         self.Luk = random.randint(0,20)
 
-        self.lvl = PointSystem(100, 1, min = 0)
+        self.lvl = PointSystem(100, 10, min = 0)
         self.exp = PointSystem(10, 0)
 
         self.RadCoins = PointSystem(1000, 100, min = 0) # currency
@@ -29,9 +30,10 @@ class Character:
     def battle(self, target, atktype, gib):  #melee attack, spell maybe pokemon
         match atktype: 
             case 1:         #Normal melee attack (weapon also)
-                damage = (self.Atk + self.Weapon.atk) * 10
+                damage = (self.Atk + self.Weapon['atk']) * 7
+                damage += random.randint(0,10)
                 finaldmg = damage // target.Def
-                target.hp -= finaldmg
+                target.Hp -= finaldmg
                 return finaldmg if gib is True else None
             case 2:
                 ...
@@ -39,17 +41,21 @@ class Character:
                 # maybe item use
 
 class Enemy:
-    def __init__(self, player, type, typedict, names):
+    def __init__(self, player, enemytype, type, typedict, names):
         self.name = random.choice(names)
-
-        self.Hp = random.randint(0, player.lvl // 2) + player.lvl.getcurrent()
-        self.atk = random.randint(0,type[type]['atk']) + player.lvl.getcurrent()
-        self.Def = random.randint(0,type[type]['def']) + player.lvl.getcurrent()
+        self.type = type
+        
+        self.Hp = random.randint(0, player.lvl.getcurrent() // 2) + player.Hp.getcurrent()
+        self.MaxHp = random.randint(0, player.lvl.getcurrent() // 2) + player.Hp.getcurrent()
+        self.atk = random.randint(0,enemytype[type]['atk']) + player.lvl.getcurrent()
+        self.Def = random.randint(0,enemytype[type]['def']) + player.lvl.getcurrent()
         
         self.xpdrop = random.randint(player.lvl.getcurrent() // 2, player.lvl.getcurrent()) * player.lvl.getcurrent()
     
     def AttackPlayer(self, player, gib):
-        damage = (self.atk + random.randint(0, player.lvl.getcurrent())) * 10
+        damage = (self.atk + random.randint(0, player.lvl.getcurrent())) * 5
         finaldmg = damage // player.Def
-        player.hp.deCurrent(finaldmg)
+        player.Hp.decCurrent(finaldmg)
         return finaldmg if gib is True else None
+    
+    def SetHp(self): self.Hp = self.MaxHp #some bug is therw fix it

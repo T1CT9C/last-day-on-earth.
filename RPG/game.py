@@ -1,33 +1,34 @@
-from RPG.Ch import Character
-from config.Config import clear
+from RPG.Ch import Character, Enemy
+from config.Config import clear, line
+import time
 
 class Game:
     def __init__(self):
         ...
         
-    def move(self, player, x, y):
+    def move(self, player, y, x):
         while True:
             clear()
-            player.map.setToken(player, x, y)
+            player.map.setToken(player, y, x)
             player.map.display()
-            player.map.map1[x][y] = '.'
+            player.map.map1[y][x] = player.map.copy1[y][x]
             # Get input for movement
             print("Enter W (up), A (left), S (down), D (right) or Q to quit:")
             move = input().upper()  # Convert input to uppercase to handle lowercase inputs
         
             # Move directly by modifying player.xpos and player.ypos
-            if move == 'W' and x > 0:
-                x -= 1
-                player.xpos = x
-            elif move == 'S' and x < player.map.rows - 1:
-                x += 1
-                player.xpos = x
-            elif move == 'A' and y > 0:
+            if move == 'W' and y > 0:
                 y -= 1
                 player.ypos = y
-            elif move == 'D' and y < player.map.cols - 1:
+            elif move == 'S' and y < player.map.rows - 1:
                 y += 1
                 player.ypos = y
+            elif move == 'A' and x > 0:
+                x -= 1
+                player.xpos = x
+            elif move == 'D' and x < player.map.cols - 1:
+                x += 1
+                player.xpos = x
             elif move == 'Q':
                 break  # Exit the game
             else:
@@ -36,13 +37,86 @@ class Game:
         
             # Update the player position on the map
             clear()
-            player.map.setToken(player, x, y)
+            player.map.setToken(player, y, x)
+            if x == 5 and y == 0: 
+                self.battle(player)
+                time.sleep(0.6)
             player.map.display()
             print(player.xpos, player.ypos)
-            input()
+            time.sleep(1)
         
     def run(self):
         s = {'name': 'cleric', 'atk':5, 'def':6, 'spd':6}
-        player = Character(s, 'oof', 'baseball bat')
-        x,y = 0,0   # add some way to input player current loc
-        self.move(player, x, y)
+        w = {'name': 'baseball bat', 'atk': 5}
+        player = Character(s, 'oof', w)
+        x = 4
+        y = 0  # add some way to input player current loc
+        self.move(player, y, x)
+    
+    def battle(self, player):
+        clear()
+        # Sample data for enemy attributes
+        enemytype = {
+            'orc': {'atk': 10, 'def': 5},
+            'goblin': {'atk': 5, 'def': 2},
+            'troll': {'atk': 15, 'def': 10}
+        }
+
+        # Sample data for type-specific characteristics
+        typedict = {
+            'orc': {'weakness': 'fire', 'strength': 'earth'},
+            'goblin': {'weakness': 'light', 'strength': 'dark'},
+            'troll': {'weakness': 'ice', 'strength': 'earth'}
+        }
+
+        # List of possible names for enemies
+        names = ['Goruk', 'Blitz', 'Zagroth', 'Snarl', 'Grimm']
+        
+        type = 'orc'  # or 'goblin', 'troll'
+        enemy = Enemy(player, enemytype, type, typedict, names)
+        
+        player.Hp.setCurrent(player.Hp.getmax())
+        enemy.SetHp()
+        
+        while True:
+            clear()
+            line('Battle')
+            print('Enemy')
+            print(f'Name: {enemy.name}, Type: {enemy.type},  HP: {enemy.Hp}, Atk: {enemy.atk}, Def: {enemy.Def}')
+            line('------')
+            print('Player')
+            print(f'Name: {player.name}, HP: {player.Hp.getcurrent()}, Atk: {player.Atk}, Def: {player.Def}')
+            line('------')
+            print()
+            print(
+"""
+(1) to attack 
+(2) to block
+(3) to use item
+(4) to flee
+""")
+            choice = int(input())
+            match choice:
+                # this is for attack (normal)
+                case 1: #add different choices here to use weapon, spell smth like tht
+                    playerdamage = player.battle(enemy, 1, True)
+                    print(f'You dealt {playerdamage} damage to {enemy.name}')
+                    if enemy.Hp <= 0:
+                        print(f'You Succesfully defeated {enemy.name}!')
+                        break
+               
+                # this is to flee
+                case 4:
+                    clear()
+                    print(f'You successfully fled from {enemy.name}!')
+                    # add some random thing here to see if u can flee
+                    time.sleep(3)
+                    return
+                    
+            enemydamage = enemy.AttackPlayer(player,True)
+            print(f'You take {enemydamage} from {enemy.name}')
+            if player.Hp.getcurrent() <= 0:
+                print('YOU DIE NOOB')
+                break
+            print('Press (enter) to proceed')
+            input()            
