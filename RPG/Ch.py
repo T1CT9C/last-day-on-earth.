@@ -24,7 +24,7 @@ class Character:
         self.xpos = 0
         self.ypos = 0
         
-        self.token = 'P'
+        self.token = '\033[32m' + 'P' + '\033[39m'
         self.map = Map()
     
     def battle(self, target, atktype, gib):  #melee attack, spell maybe pokemon

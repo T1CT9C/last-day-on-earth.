@@ -21,7 +21,7 @@ class Map:
     def __init__(self, token='P'): 
         
         self.map1 = [
-            [".",".",".",".",".","E","."],
+            [".",".",".",".",".",".","."],
             [".",".",".",".",".",".","."],
             [".",".",".",".",".",".","."],
             [".",".",".",".",".",".","."],
@@ -30,7 +30,7 @@ class Map:
             [".",".",".",".",".",".","."], ]
 
         self.copy1 = [
-            [".",".",".",".",".","E","."],
+            [".",".",".",".",".",".","."],
             [".",".",".",".",".",".","."],
             [".",".",".",".",".",".","."],
             [".",".",".",".",".",".","."],
@@ -88,6 +88,12 @@ class PointSystem:
     def incCurrent(self, inc): 
         self.current = self.max if inc > self.max or inc + self.current > self.max else self.current + inc
 
+class EnemyToken:
+    def __init__(self, x, y):
+        self.xpos = x
+        self.ypos = y
+        self.token = '\033[31m' + 'E' + '\033[39m'
+    
 # Items
 RadApple =       Item('Irradiated apple', 'Inc Food', 'Inc Rad', 5, 15, False, True)
 RustyCannister = Item('Rusty Canister', 'Inc Food', 'Inc Rad', 25, 5, False, True)

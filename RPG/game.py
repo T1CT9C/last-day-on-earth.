@@ -1,4 +1,6 @@
+import random
 from RPG.Ch import Character, Enemy
+from RPG.Entities import EnemyToken
 from config.Config import clear, line
 import time
 
@@ -6,11 +8,13 @@ class Game:
     def __init__(self):
         ...
         
-    def move(self, player, y, x):
+    def move(self, player, y, x, etoken):
         while True:
             clear()
             player.map.setToken(player, y, x)
+            player.map.setToken(etoken, etoken.ypos, etoken.xpos)
             player.map.display()
+            player.map.map1[etoken.ypos][etoken.xpos] = player.map.copy1[etoken.ypos][etoken.xpos]
             player.map.map1[y][x] = player.map.copy1[y][x]
             # Get input for movement
             print("Enter W (up), A (left), S (down), D (right) or Q to quit:")
@@ -38,20 +42,43 @@ class Game:
             # Update the player position on the map
             clear()
             player.map.setToken(player, y, x)
-            if x == 5 and y == 0: 
+
+            if random.randint(0,1) == 1:
+                if etoken.xpos > x and not (etoken.xpos >= len(player.map.map1[0]) - 1):
+                    etoken.xpos -= 1
+                elif etoken.xpos < x and not (etoken.xpos <= 0):
+                    etoken.xpos += 1
+
+                if etoken.ypos > y and not (etoken.ypos >= len(player.map.map1) - 1):
+                    etoken.ypos -= 1
+                elif etoken.ypos < y and not (etoken.ypos <= 0):
+                    etoken.ypos += 1
+
+                player.map.setToken(etoken, etoken.ypos, etoken.xpos)
+                        
+            if x == etoken.xpos and y == etoken.ypos: 
                 self.battle(player)
                 time.sleep(0.6)
+                etoken.xpos = random.randint(-6,6)
+                etoken.ypos = random.randint(-6, 6)
+                player.map.setToken(etoken, etoken.ypos, etoken.xpos)
+            
             player.map.display()
             print(player.xpos, player.ypos)
             time.sleep(1)
+            
+            # Enemy movement
+            
+    
         
     def run(self):
         s = {'name': 'cleric', 'atk':5, 'def':6, 'spd':6}
         w = {'name': 'baseball bat', 'atk': 5}
         player = Character(s, 'oof', w)
-        x = 4
+        Etoken = EnemyToken(random.randint(0, len(player.map.map1) + 1), random.randint(0, len(player.map.map1) + 1))
+        x = 0
         y = 0  # add some way to input player current loc
-        self.move(player, y, x)
+        self.move(player, y, x, Etoken)
     
     def battle(self, player):
         clear()
@@ -95,7 +122,13 @@ class Game:
 (3) to use item
 (4) to flee
 """)
-            choice = int(input())
+            while True:
+                try:
+                    choice = int(input())
+                    break
+                except ValueError:
+                    print('Wrong Input')
+            
             match choice:
                 # this is for attack (normal)
                 case 1: #add different choices here to use weapon, spell smth like tht
@@ -110,7 +143,7 @@ class Game:
                     clear()
                     print(f'You successfully fled from {enemy.name}!')
                     # add some random thing here to see if u can flee
-                    time.sleep(3)
+                    time.sleep(2)
                     return
                     
             enemydamage = enemy.AttackPlayer(player,True)
