@@ -45,7 +45,7 @@ class Game:
             clear()
             player.map.setToken(player, y, x)
 
-            if etoken.xpos < x + 3 and etoken.ypos < y + 3:
+            if etoken.xpos < (x + 4) and etoken.xpos > x and etoken.ypos < (y + 4) and etoken.ypos > y:
                 if etoken.xpos > x and (etoken.xpos - 1 <= len(player.map.map1[0]) - 1):
                     etoken.xpos -= 1
                 elif etoken.xpos < x and (etoken.xpos + 1 >= 0):

@@ -60,9 +60,9 @@ class Map:
     def getrows(self): return self.rows
     def getcols(self): return self.cols
     
-    def setToken(self, player, xindex, yindex):
+    def setToken(self, player, yindex, xindex):
         self.clearToken(player)
-        self.map1[xindex][yindex] = player.token
+        self.map1[yindex][xindex] = player.token
     
     def clearToken(self, player):
         self.map1[player.ypos][player.xpos] = self.copy1[player.ypos][player.xpos]
