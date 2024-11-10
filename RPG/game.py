@@ -67,8 +67,8 @@ class Game:
             if x == etoken.xpos and y == etoken.ypos: 
                 self.battle(player)
                 time.sleep(0.6)
-                etoken.xpos = random.randint(-6,6)
-                etoken.ypos = random.randint(-6, 6)
+                etoken.xpos = random.randint(0,6)
+                etoken.ypos = random.randint(0,6)
                 player.map.setToken(etoken, etoken.ypos, etoken.xpos)
                 player.map.setToken(player, y, x)
             
