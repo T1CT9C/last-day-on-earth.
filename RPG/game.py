@@ -33,6 +33,8 @@ class Game:
             elif move == 'D' and x < player.map.cols - 1:
                 x += 1
                 player.xpos = x
+            elif move == '' or ' ':
+                ...
             elif move == 'Q':
                 break  # Exit the game
             else:
@@ -43,25 +45,32 @@ class Game:
             clear()
             player.map.setToken(player, y, x)
 
-            if random.randint(0,1) == 1:
-                if etoken.xpos > x and not (etoken.xpos >= len(player.map.map1[0]) - 1):
+            if etoken.xpos < x + 3 and etoken.ypos < y + 3:
+                if etoken.xpos > x and (etoken.xpos - 1 <= len(player.map.map1[0]) - 1):
                     etoken.xpos -= 1
-                elif etoken.xpos < x and not (etoken.xpos <= 0):
+                elif etoken.xpos < x and (etoken.xpos + 1 >= 0):
                     etoken.xpos += 1
-
-                if etoken.ypos > y and not (etoken.ypos >= len(player.map.map1) - 1):
+    
+                if etoken.ypos > y and (etoken.ypos - 1 <= len(player.map.map1) - 1):
                     etoken.ypos -= 1
-                elif etoken.ypos < y and not (etoken.ypos <= 0):
+                elif etoken.ypos < y and (etoken.ypos + 1 >= 0):
                     etoken.ypos += 1
-
-                player.map.setToken(etoken, etoken.ypos, etoken.xpos)
-                        
+            else:
+                if random.randint(0,1) == 1:
+                    etoken.ypos = etoken.ypos + 1 if etoken.ypos + 1 <= len(player.map.map1) else etoken.ypos
+                    etoken.xpos = etoken.xpos + 1 if etoken.xpos + 1 <= len(player.map.map1[1]) else etoken.xpos
+                else:
+                    etoken.ypos = etoken.ypos - 1 if etoken.ypos - 1 > 0 else etoken.ypos
+                    etoken.xpos = etoken.xpos - 1 if etoken.xpos - 1 > 0 else etoken.xpos
+            player.map.setToken(etoken, etoken.ypos, etoken.xpos)
+            
             if x == etoken.xpos and y == etoken.ypos: 
                 self.battle(player)
                 time.sleep(0.6)
                 etoken.xpos = random.randint(-6,6)
                 etoken.ypos = random.randint(-6, 6)
                 player.map.setToken(etoken, etoken.ypos, etoken.xpos)
+                player.map.setToken(player, y, x)
             
             player.map.display()
             print(player.xpos, player.ypos)
