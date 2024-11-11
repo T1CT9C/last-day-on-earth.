@@ -61,11 +61,9 @@ class Map:
     def getcols(self): return self.cols
     
     def setToken(self, player, yindex, xindex):
-        self.clearToken(player)
+        self.map1[player.ypos][player.xpos] = self.copy1[player.ypos][player.xpos]
         self.map1[yindex][xindex] = player.token
     
-    def clearToken(self, player):
-        self.map1[player.ypos][player.xpos] = self.copy1[player.ypos][player.xpos]
 
 class PointSystem:
     def __init__(self, max, current, min = 0):

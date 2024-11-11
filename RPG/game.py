@@ -45,30 +45,29 @@ class Game:
             clear()
             player.map.setToken(player, y, x)
 
-            if etoken.xpos < (x + 4) and etoken.xpos > x and etoken.ypos < (y + 4) and etoken.ypos > y:
-                if etoken.xpos > x and (etoken.xpos - 1 <= len(player.map.map1[0]) - 1):
+            if ((etoken.xpos < (x + 3) and etoken.xpos > x) or (etoken.xpos > (x-3) and etoken.xpos < x)) and ((etoken.ypos < (y + 3) and etoken.ypos > y) or (etoken.ypos > (y-3) and etoken.ypos < y)):
+                if etoken.xpos > x and (etoken.xpos - 1 <= (len(player.map.map1[0]) - 1)):
                     etoken.xpos -= 1
                 elif etoken.xpos < x and (etoken.xpos + 1 >= 0):
                     etoken.xpos += 1
     
-                if etoken.ypos > y and (etoken.ypos - 1 <= len(player.map.map1) - 1):
+                if etoken.ypos > y and (etoken.ypos - 1 <= (len(player.map.map1) - 1)):
                     etoken.ypos -= 1
-                elif etoken.ypos < y and (etoken.ypos + 1 >= 0):
+                elif etoken.ypos < y and ((etoken.ypos + 1) >= 0):
                     etoken.ypos += 1
-            else:
-                if random.randint(0,1) == 1:
-                    etoken.ypos = etoken.ypos + 1 if etoken.ypos + 1 <= len(player.map.map1) else etoken.ypos
-                    etoken.xpos = etoken.xpos + 1 if etoken.xpos + 1 <= len(player.map.map1[1]) else etoken.xpos
-                else:
-                    etoken.ypos = etoken.ypos - 1 if etoken.ypos - 1 > 0 else etoken.ypos
-                    etoken.xpos = etoken.xpos - 1 if etoken.xpos - 1 > 0 else etoken.xpos
+            else:        
+                etoken.ypos = etoken.ypos + 1 if etoken.ypos + 1 <= len(player.map.map1) else etoken.ypos
+                etoken.xpos = etoken.xpos + 1 if etoken.xpos + 1 <= len(player.map.map1[1]) else etoken.xpos
+                etoken.ypos = etoken.ypos - 1 if etoken.ypos - 1 > 0 else etoken.ypos
+                etoken.xpos = etoken.xpos - 1 if etoken.xpos - 1 > 0 else etoken.xpos
+                
             player.map.setToken(etoken, etoken.ypos, etoken.xpos)
             
             if x == etoken.xpos and y == etoken.ypos: 
                 self.battle(player)
                 time.sleep(0.6)
-                etoken.xpos = random.randint(0,6)
-                etoken.ypos = random.randint(0,6)
+                etoken.xpos = random.randint(0,len(player.map.map1[0])-1)
+                etoken.ypos = random.randint(0,len(player.map.map1)-1)
                 player.map.setToken(etoken, etoken.ypos, etoken.xpos)
                 player.map.setToken(player, y, x)
             
@@ -84,7 +83,7 @@ class Game:
         s = {'name': 'cleric', 'atk':5, 'def':6, 'spd':6}
         w = {'name': 'baseball bat', 'atk': 5}
         player = Character(s, 'oof', w)
-        Etoken = EnemyToken(random.randint(0, len(player.map.map1) + 1), random.randint(0, len(player.map.map1) + 1))
+        Etoken = EnemyToken(random.randint(0, len(player.map.map1) - 1), random.randint(0, len(player.map.map1) - 1))
         x = 0
         y = 0  # add some way to input player current loc
         self.move(player, y, x, Etoken)
