@@ -1,6 +1,6 @@
 import random
 from RPG.Ch import Character, Enemy
-from RPG.Entities import EnemyToken
+from RPG.Entities import EnemyToken, Door
 from config.Config import clear, line
 import time
 
@@ -8,11 +8,13 @@ class Game:
     def __init__(self):
         ...
         
-    def move(self, player, y, x, etoken):
+    def move(self, player, y, x, etoken, d1, d2):
         while True:
             clear()
             player.map.setToken(player, y, x)
             player.map.setToken(etoken, etoken.ypos, etoken.xpos)
+            player.map.setToken(d1, d1.ypos, d1.xpos)
+            player.map.setToken(d2, d2.ypos, d2.xpos)
             player.map.display()
             player.map.map1[etoken.ypos][etoken.xpos] = player.map.copy1[etoken.ypos][etoken.xpos]
             player.map.map1[y][x] = player.map.copy1[y][x]
@@ -70,7 +72,9 @@ class Game:
                 etoken.ypos = random.randint(0,len(player.map.map1)-1)
                 player.map.setToken(etoken, etoken.ypos, etoken.xpos)
                 player.map.setToken(player, y, x)
-            
+            if (x == d1.xpos and y == d1.ypos) or (x == d2.xpos and y == d2.ypos):
+                print('game over')
+                exit()           
             player.map.display()
             print(player.xpos, player.ypos)
             time.sleep(1)
@@ -83,10 +87,12 @@ class Game:
         s = {'name': 'cleric', 'atk':5, 'def':6, 'spd':6}
         w = {'name': 'baseball bat', 'atk': 5}
         player = Character(s, 'oof', w)
+        door1 = Door(0,3)
+        door2 = Door(6,3)
         Etoken = EnemyToken(random.randint(0, len(player.map.map1) - 1), random.randint(0, len(player.map.map1) - 1))
         x = 0
         y = 0  # add some way to input player current loc
-        self.move(player, y, x, Etoken)
+        self.move(player, y, x, Etoken, door1, door2)
     
     def battle(self, player):
         clear()

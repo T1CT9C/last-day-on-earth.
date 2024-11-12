@@ -1,3 +1,6 @@
+from os import X_OK
+
+
 class Item:   
     def __init__(self, name, type, subtype, incMain, incSub, ispermanent, isconsumable):
         self.name = name
@@ -91,7 +94,12 @@ class EnemyToken:
         self.xpos = x
         self.ypos = y
         self.token = '\033[31m' + 'E' + '\033[39m'
-    
+
+class Door:
+    def __init__(self, x, y):
+        self.xpos = x 
+        self.ypos = y
+        self.token = '\033[34m' + '#' + '\033[0m'
 # Items
 RadApple =       Item('Irradiated apple', 'Inc Food', 'Inc Rad', 5, 15, False, True)
 RustyCannister = Item('Rusty Canister', 'Inc Food', 'Inc Rad', 25, 5, False, True)
