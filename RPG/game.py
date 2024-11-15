@@ -2,6 +2,18 @@ import random
 from RPG.Ch import Character, Enemy
 from RPG.Entities import EnemyToken, Door
 from config.Config import clear, line
+from RPG.data import (
+enemytype,
+typedict,
+names,
+deviltypehash,
+darkdevil,
+lightdevil,
+airdevil,
+waterdevil,
+earthdevil,
+firedevil
+)
 import time
 
 class Game:
@@ -72,17 +84,13 @@ class Game:
                 etoken.ypos = random.randint(0,len(player.map.map1)-1)
                 player.map.setToken(etoken, etoken.ypos, etoken.xpos)
                 player.map.setToken(player, y, x)
-            if (x == d1.xpos and y == d1.ypos) or (x == d2.xpos and y == d2.ypos):
-                print('game over')
-                exit()           
+            
+            # add smrh here later
+            if (x == d1.xpos and y == d1.ypos) or (x == d2.xpos and y == d2.ypos): ...         
             player.map.display()
             print(player.xpos, player.ypos)
             time.sleep(1)
-            
-            # Enemy movement
-            
-    
-        
+
     def run(self):
         s = {'name': 'cleric', 'atk':5, 'def':6, 'spd':6}
         w = {'name': 'baseball bat', 'atk': 5}
@@ -96,24 +104,6 @@ class Game:
     
     def battle(self, player):
         clear()
-        # Sample data for enemy attributes
-        enemytype = {
-            'orc': {'atk': 10, 'def': 5},
-            'goblin': {'atk': 5, 'def': 2},
-            'troll': {'atk': 15, 'def': 10}
-        }
-
-        # Sample data for type-specific characteristics
-        typedict = {
-            'orc': {'weakness': 'fire', 'strength': 'earth'},
-            'goblin': {'weakness': 'light', 'strength': 'dark'},
-            'troll': {'weakness': 'ice', 'strength': 'earth'}
-        }
-
-        # List of possible names for enemies
-        names = ['Goruk', 'Blitz', 'Zagroth', 'Snarl', 'Grimm']
-        
-        type = 'orc'  # or 'goblin', 'troll'
         enemy = Enemy(player, enemytype, type, typedict, names)
         
         player.Hp.setCurrent(player.Hp.getmax())
@@ -131,8 +121,8 @@ class Game:
             print()
             print(
 """
-(1) to attack 
-(2) to block
+(1) to Fight (No Summon)
+(2) to Summon Pokemon
 (3) to use item
 (4) to flee
 """)
@@ -151,7 +141,8 @@ class Game:
                     if enemy.Hp <= 0:
                         print(f'You Succesfully defeated {enemy.name}!')
                         break
-               
+                # Pokemon choice
+                case 2:...
                 # this is to flee
                 case 4:
                     clear()

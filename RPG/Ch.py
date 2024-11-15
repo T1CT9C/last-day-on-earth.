@@ -59,3 +59,10 @@ class Enemy:
         return finaldmg if gib is True else None
     
     def SetHp(self): self.Hp = self.MaxHp #some bug is therw fix it
+
+#Pokemon
+class devil:
+    def __init__(self, deviltype, type):
+        self.name = deviltype[type]['name']
+        self.type = deviltype[type]['type']
+        self.
