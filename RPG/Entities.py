@@ -100,6 +100,16 @@ class Door:
         self.xpos = x 
         self.ypos = y
         self.token = '\033[34m' + '#' + '\033[0m'
+
+class Effects:
+    def __init__(self):
+        self.isbleeding = False
+        self.isburning = False
+        self.ishungry = False
+        self.canAtk = True
+        self.canFlee = True
+        #add more effects for devil spells and player items
+
 # Items
 RadApple =       Item('Irradiated apple', 'Inc Food', 'Inc Rad', 5, 15, False, True)
 RustyCannister = Item('Rusty Canister', 'Inc Food', 'Inc Rad', 25, 5, False, True)

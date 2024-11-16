@@ -1,4 +1,5 @@
-from RPG.Entities import Map, PointSystem
+from RPG.Entities import Map, PointSystem, Effects
+from RPG.data import deviltypehash
 import random
 
 class Character:
@@ -7,8 +8,11 @@ class Character:
         self.Hp = PointSystem(50, 50, min = 0)
         self.subclass = subclass['name']
         self.name = name
+        
         self.Weapon = Weapon
         self.WeaponName = Weapon['name']
+        self.summon = devil(deviltypehash, 'Light', 'Light Devil')
+        self.effects = Effects()
         
         self.Atk = random.randint(0,10) + subclass['atk']
         self.Def = random.randint(0,10) + subclass['def']
@@ -62,7 +66,14 @@ class Enemy:
 
 #Pokemon
 class devil:
-    def __init__(self, deviltype, type):
-        self.name = deviltype[type]['name']
-        self.type = deviltype[type]['type']
-        self.
+    def __init__(self, deviltype, type, name):
+        self.devil = deviltypehash[type]
+
+        self.name = name
+        self.Hp = self.devil['Hp']
+        self.lvl = PointSystem(100,self.devil['level'])
+        self.type = self.devil['type']
+        
+        self.atkSpell = self.devil['attack']
+        self.defSpell = self.devil['defense']
+        self.mana = PointSystem(100, 100) # uses dofferent mana for every spell
