@@ -77,4 +77,7 @@ class devil:
         
         self.atkSpell = self.devil['attack']
         self.defSpell = self.devil['defense']
-        self.mana = PointSystem(100, 100) # uses dofferent mana for every spell
+        self.mana = PointSystem(100, 100) # uses different mana for every spell
+        
+        def GetType(self): return self.type
+        def GetName(self): return self.name
