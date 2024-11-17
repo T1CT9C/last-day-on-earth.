@@ -48,6 +48,7 @@ class Enemy:
     def __init__(self, player, enemytype, type, typedict, names):
         self.name = random.choice(names)
         self.type = type
+        self.effects = Effects()
         
         self.Hp = random.randint(0, player.lvl.getcurrent() // 2) + player.Hp.getcurrent()
         self.MaxHp = random.randint(0, player.lvl.getcurrent() // 2) + player.Hp.getcurrent()

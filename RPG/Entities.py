@@ -103,8 +103,15 @@ class Door:
 
 class Effects:
     def __init__(self):
-        self.isbleeding = False
-        self.isburning = False
+        self.isBleeding = False
+        self.isBurned = False
+        self.isWounded = False
+        self.reflectDamage = False
+        self.isInvisible = False
+        self.isInvincible = False
+        self.isCursed = False
+        self.isSoaked = True
+        self.FireArmor = True
         self.ishungry = False
         self.canAtk = True
         self.canFlee = True
