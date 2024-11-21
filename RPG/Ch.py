@@ -11,7 +11,7 @@ class Character:
         
         self.Weapon = Weapon
         self.WeaponName = Weapon['name']
-        self.summon = devil(deviltypehash, 'Light', 'Light Devil')
+        self.summon = devil(deviltypehash, 'light', 'Light Devil')
         self.effects = Effects()
         
         self.Atk = random.randint(0,10) + subclass['atk']

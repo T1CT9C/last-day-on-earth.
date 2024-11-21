@@ -59,7 +59,37 @@ class Map:
         
         print('|' + ''.join(' ' * 1 for _ in range(self.cols * 3 + 10)) + '|')
         print('+' + ''.join('-' * 1 for _ in range(self.cols * 4  + 3)) + '+')
-
+    
+    def customeMap(self): 
+        self.map1 = self.getMap()
+        self.copy1 = self.map1
+        
+    def getMap(self):
+        with open("Map.txt", "w") as file:
+            file.write("----Map 1----\n")
+            map = []
+            submap = []
+    
+            while True:
+                mapchr = input('> ')
+                if mapchr.lower() == 'q':
+                    if submap:
+                        map.append(submap)
+                    return map   
+                elif mapchr.lower() == 'n':
+                    if submap:
+                        map.append(submap)
+                        submap = []
+                    file.write('\n')
+                    print("Current Map:")
+                    for sub in map:
+                        print('  '.join(sub))
+                    print()
+    
+                else:
+                    file.write(mapchr)
+                    submap.append(mapchr)
+    
     def getrows(self): return self.rows
     def getcols(self): return self.cols
     

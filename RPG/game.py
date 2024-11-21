@@ -100,7 +100,8 @@ class Game:
         Etoken = EnemyToken(random.randint(0, len(player.map.map1) - 1), random.randint(0, len(player.map.map1) - 1))
         x = 0
         y = 0  # add some way to input player current loc
-        self.move(player, y, x, Etoken, door1, door2)
+        #self.move(player, y, x, Etoken, door1, door2)
+        player.map.customeMap()
     
     def battle(self, player):
         clear()
